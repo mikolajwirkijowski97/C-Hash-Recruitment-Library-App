@@ -4,7 +4,6 @@ using System.Text;
 
 namespace LibraryApp
 {
-
     class Library
     {
         
@@ -30,7 +29,5 @@ namespace LibraryApp
             TimeSpan span = d2.Subtract(d1);
             return (int)span.TotalDays;
         }
-
-
     }
 }

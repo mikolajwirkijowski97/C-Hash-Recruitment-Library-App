@@ -9,6 +9,11 @@ namespace LibraryApp
         BookCategory Choice;
         DateTime RentDate;
         DateTime ReturnDate;
+        readonly Library LibraryInstance;
+        public Cli()
+        {
+            LibraryInstance = new Library();
+        }
         public void Start()
         {
             WelcomeText();
@@ -20,7 +25,21 @@ namespace LibraryApp
             ReturnDateText();
             ReturnDate = ReceiveDateInputValidationLoop();
 
+            PrintPaymentInformation();
 
+
+        }
+
+        private void PrintPaymentInformation()
+        {
+            int debt = LibraryInstance.UserDebt(RentDate, ReturnDate, Choice);
+            if(debt > 0)
+            {
+                Console.WriteLine("Borrower penalty fee is {0}PLN", debt);
+                return;
+            }
+
+            Console.WriteLine("Borrower has no fee to pay");
         }
         private void WelcomeText()
         {
@@ -40,12 +59,12 @@ namespace LibraryApp
         
         private void RentDateText()
         {
-            Console.WriteLine("Please input the date of the book rental");
+            Console.WriteLine("Please input the date of the book rental. Input must be numerical.");
         }
         
         private void ReturnDateText()
         {
-            Console.WriteLine("Please input the date of the book returnal");
+            Console.WriteLine("Please input the date of the book returnal. Input must be numerical.");
         }
 
 
@@ -81,10 +100,13 @@ namespace LibraryApp
 
         private DateTime ReceiveDateInput()
         {
-            Console.Write("Enter a month: ");
-            int month = int.Parse(Console.ReadLine());
+            
             Console.Write("Enter a day: ");
             int day = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter a month: ");
+            int month = int.Parse(Console.ReadLine());
+
             Console.Write("Enter a year: ");
             int year = int.Parse(Console.ReadLine());
 
@@ -112,6 +134,8 @@ namespace LibraryApp
             return ret;
 
         }
+
+
 
     }
 }
