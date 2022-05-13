@@ -7,7 +7,9 @@ namespace LibraryApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           Cli userInterface = new Cli();
+            userInterface.Start();
+            
         }
     }
 }
