@@ -4,35 +4,49 @@ using System.Text;
 
 namespace LibraryApp
 {
-    class Cli
+    /// <summary>Class <c>Cli</c> Displays the libraries user interface and handles user input
+    /// </summary>
+    ///
+    public class Cli
     {
-        BookCategory Choice;
-        DateTime RentDate;
-        DateTime ReturnDate;
-        readonly Library LibraryInstance;
-        public Cli()
-        {
-            LibraryInstance = new Library();
-        }
+        /// <summary>
+        /// The choice of the book category according the user input.
+        /// </summary>
+        BookCategory choice;
+        /// <summary>
+        /// The date on which a book has been rented according to user input.
+        /// </summary>
+        DateTime rentDate;
+        /// <summary>
+        /// The date on which a book has been returned according to user input.
+        /// </summary>
+        DateTime returnDate;
+        ///<summary> The method used to start the console user interface. No further configuration
+        ///needed
+        ///</summary>
         public void Start()
         {
             WelcomeText();
             ReceiveCategoryInputValidationLoop();
             
             RentDateText();
-            RentDate = ReceiveDateInputValidationLoop();
+            rentDate = ReceiveDateInputValidationLoop();
 
             ReturnDateText();
-            ReturnDate = ReceiveDateInputValidationLoop();
+            returnDate = ReceiveDateInputValidationLoop();
 
             PrintPaymentInformation();
 
 
         }
-
+        /// <summary>
+        /// Prints the debt of the library client to the console. The method assumes the variables 
+        /// rentDate and return date are not empty. If return date is earlier then the rent day then
+        /// no borrower fee is printed.
+        /// </summary>
         private void PrintPaymentInformation()
         {
-            int debt = LibraryInstance.UserDebt(RentDate, ReturnDate, Choice);
+            int debt = Library.UserDebt(rentDate, returnDate, choice);
             if(debt > 0)
             {
                 Console.WriteLine("Borrower penalty fee is {0}PLN", debt);
@@ -43,7 +57,7 @@ namespace LibraryApp
         }
         private void WelcomeText()
         {
-            Console.WriteLine("Welcome to the library!"); ;
+            Console.WriteLine("Welcome to the library!");
         }
         private void CategoryText()
         {
@@ -67,18 +81,24 @@ namespace LibraryApp
             Console.WriteLine("Please input the date of the book returnal. Input must be numerical.");
         }
 
-
+        /// <summary>
+        /// Takes user input and assigns it to the <c>choice</c> variable. Input must be numeric
+        /// and must be defined in the BookCategory enum, otherwise an exception will be thrown
+        /// </summary>
         private void ReceiveCategoryInput()
         {
             int InputNumber = Convert.ToInt32(Console.ReadLine())-1;
             if (Enum.IsDefined(typeof(BookCategory), InputNumber))
             {
-                Choice = (BookCategory)InputNumber;
+                choice = (BookCategory)InputNumber;
                 return;
             }
             throw new ArithmeticException("Invalid user input"); 
         }
-
+        /// <summary>
+        /// Calls the <c>ReceiveCategoryInput</c> method until no exception is thrown. In short: 
+        /// Makes sure the user category input is valid
+        /// </summary>
         private void ReceiveCategoryInputValidationLoop()
         {
             bool inputValid;
@@ -112,7 +132,11 @@ namespace LibraryApp
 
             return new DateTime(year, month, day);
         }
-
+        /// <summary>
+        /// Calls the <c>ReceiveDateInput</c> method until no exception is thrown. In short: 
+        /// Makes sure the user day, month, year input is a valid date.
+        /// </summary>
+        /// <returns>The correctly inputted date as <c>DateTime</c></returns>
         private DateTime ReceiveDateInputValidationLoop()
         {
             bool inputValid;
@@ -134,8 +158,5 @@ namespace LibraryApp
             return ret;
 
         }
-
-
-
     }
 }
