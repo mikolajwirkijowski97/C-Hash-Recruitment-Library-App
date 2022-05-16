@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LibraryApp
+﻿namespace LibraryApp
 {
     /// <summary>
     /// Categories of books available to rent at the library.
