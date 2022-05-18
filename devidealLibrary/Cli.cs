@@ -4,39 +4,40 @@ namespace LibraryApp
 {
     /// <summary>Class <c>Cli</c> Displays the libraries user interface and handles user input
     /// </summary>
-    ///
     public class Cli
     {
         /// <summary>
         /// The choice of the book category according the user input.
         /// </summary>
-        BookCategory choice;
+        private BookCategory choice;
+
         /// <summary>
         /// The date on which a book has been rented according to user input.
         /// </summary>
-        DateTime rentDate;
+        private DateTime rentDate;
+
         /// <summary>
         /// The date on which a book has been returned according to user input.
         /// </summary>
-        DateTime returnDate;
-        ///<summary> The method used to start the console user interface. No further configuration
-        ///needed
-        ///</summary>
+        private DateTime returnDate;
+
+        /// <summary> The method used to start the console user interface. No further configuration
+        /// needed
+        /// </summary>
         public void Start()
         {
-            WelcomeText();
-            ReceiveCategoryInputValidationLoop();
+            this.WelcomeText();
+            this.ReceiveCategoryInputValidationLoop();
             
-            RentDateText();
-            rentDate = ReceiveDateInputValidationLoop();
+            this.RentDateText();
+            this.rentDate = this.ReceiveDateInputValidationLoop();
 
-            ReturnDateText();
-            returnDate = ReceiveDateInputValidationLoop();
+            this.ReturnDateText();
+            this.returnDate = this.ReceiveDateInputValidationLoop();
 
-            PrintPaymentInformation();
-
-
+            this.PrintPaymentInformation();
         }
+        
         /// <summary>
         /// Prints the debt of the library client to the console. The method assumes the variables 
         /// rentDate and return date are not empty. If return date is earlier then the rent day then
@@ -44,8 +45,8 @@ namespace LibraryApp
         /// </summary>
         private void PrintPaymentInformation()
         {
-            int debt = Library.UserDebt(rentDate, returnDate, choice);
-            if(debt > 0)
+            int debt = Library.UserDebt(this.rentDate, this.returnDate, this.choice);
+            if (debt > 0)
             {
                 Console.WriteLine("Borrower penalty fee is {0}PLN", debt);
                 return;
@@ -53,20 +54,21 @@ namespace LibraryApp
 
             Console.WriteLine("Borrower has no fee to pay");
         }
+
         private void WelcomeText()
         {
             Console.WriteLine("Welcome to the library!");
         }
+        
         private void CategoryText()
         {
             Console.WriteLine("Please Choose a book from one of the following categories:");
             
             int i = 0;
-            foreach(BookCategory bt in (BookCategory[])Enum.GetValues(typeof(BookCategory)))
+            foreach (BookCategory bt in (BookCategory[])Enum.GetValues(typeof(BookCategory)))
             {
-                Console.WriteLine("{0}. {1}",++i,bt);
+                Console.WriteLine("{0}. {1}", ++i, bt);
             }
-            
         }
         
         private void RentDateText()
@@ -85,14 +87,16 @@ namespace LibraryApp
         /// </summary>
         private void ReceiveCategoryInput()
         {
-            int InputNumber = Convert.ToInt32(Console.ReadLine())-1;
-            if (Enum.IsDefined(typeof(BookCategory), InputNumber))
+            int inputNumber = Convert.ToInt32(Console.ReadLine()) - 1;
+            if (Enum.IsDefined(typeof(BookCategory), inputNumber))
             {
-                choice = (BookCategory)InputNumber;
+                this.choice = (BookCategory)inputNumber;
                 return;
             }
+
             throw new ArithmeticException("Invalid user input"); 
         }
+        
         /// <summary>
         /// Calls the <c>ReceiveCategoryInput</c> method until no exception is thrown. In short: 
         /// Makes sure the user category input is valid
@@ -104,8 +108,8 @@ namespace LibraryApp
             {
                 try
                 {
-                    CategoryText();
-                    ReceiveCategoryInput();
+                    this.CategoryText();
+                    this.ReceiveCategoryInput();
                     inputValid = true;
                 }
                 catch
@@ -113,12 +117,16 @@ namespace LibraryApp
                     inputValid = false;
                     Console.WriteLine("Please input the correct value");
                 }
-            } while (!inputValid);
+            } 
+            while (!inputValid);
         }
 
+        /// <summary>
+        /// Prompts the user to enter the day, month and year and returns the input as an object of class <c>DateTime</c>
+        /// </summary>
+        /// /// <returns>The correctly inputted date as <c>DateTime</c></returns>
         private DateTime ReceiveDateInput()
         {
-            
             Console.Write("Enter a day: ");
             int day = int.Parse(Console.ReadLine());
 
@@ -130,6 +138,7 @@ namespace LibraryApp
 
             return new DateTime(year, month, day);
         }
+        
         /// <summary>
         /// Calls the <c>ReceiveDateInput</c> method until no exception is thrown. In short: 
         /// Makes sure the user day, month, year input is a valid date.
@@ -143,7 +152,7 @@ namespace LibraryApp
             {
                 try
                 {
-                    ret = ReceiveDateInput();
+                    ret = this.ReceiveDateInput();
                     inputValid = true;
                 }
                 catch
@@ -151,10 +160,9 @@ namespace LibraryApp
                     Console.WriteLine("The date you entered is not valid! Please try again!");
                     inputValid = false;
                 }
-            } while (!inputValid);
-            
+            } 
+            while (!inputValid);
             return ret;
-
         }
     }
 }

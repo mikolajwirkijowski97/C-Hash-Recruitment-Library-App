@@ -28,7 +28,7 @@ namespace LibraryApp
         /// <param name="rentDay">The day the book was rented</param>
         /// <param name="returnDay">The day the book was returned</param>
         /// <param name="b">The category of the book</param>
-        /// <returns></returns>
+        /// <returns>The user debt in PLN as an integer</returns>
         static public int UserDebt(DateTime rentDay, DateTime returnDay, BookCategory b)
         {
             int daysAllowed = 1;
