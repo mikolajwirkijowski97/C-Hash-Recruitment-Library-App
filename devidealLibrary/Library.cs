@@ -22,6 +22,7 @@ namespace LibraryApp
                 _ => 0
             };
         }
+
         /// <summary>
         /// Returns the calculated debt of the borrower. One day of rental is at no cost.
         /// </summary>
@@ -34,6 +35,7 @@ namespace LibraryApp
             int daysAllowed = 1;
             return (DaysBetween(rentDay,returnDay) - daysAllowed) * BookCostPerDay(b);
         }
+
         /// <summary>
         /// Calculates the number of days between two dates.
         /// </summary>
