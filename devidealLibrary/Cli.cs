@@ -28,13 +28,16 @@ namespace LibraryApp
         {
             this.WelcomeText();
             this.ReceiveCategoryInputValidationLoop();
-            
+
+            Console.Clear();
             this.RentDateText();
             this.rentDate = this.ReceiveDateInputValidationLoop();
 
+            Console.Clear();
             this.ReturnDateText();
             this.returnDate = this.ReceiveDateInputValidationLoop();
 
+            Console.Clear();
             this.PrintPaymentInformation();
         }
         
@@ -127,6 +130,7 @@ namespace LibraryApp
         /// /// <returns>The correctly inputted date as <c>DateTime</c></returns>
         private DateTime ReceiveDateInput()
         {
+            
             Console.Write("Enter a day: ");
             int day = int.Parse(Console.ReadLine());
 
